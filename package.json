@@ -1,0 +1,25 @@
+{
+  "name": "snapx",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c yellow,cyan \"npm -w @snapx/api run dev\" \"npm -w @snapx/web run dev\"",
+    "build": "npm -w @snapx/api run build && npm -w @snapx/web run build",
+    "db:migrate": "node apps/api/scripts/migrate.mjs",
+    "db:seed": "node apps/api/scripts/seed.mjs",
+    "db:reset": "npm run db:migrate && npm run db:seed",
+    "test": "npm -w @snapx/api run test",
+    "lint": "eslint \"apps/api/src/**/*.ts\" \"apps/web/{app,components,features,lib}/**/*.{ts,tsx}\"",
+    "typecheck": "tsc --noEmit -p apps/api && tsc --noEmit -p apps/web"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "concurrently": "^9.1.0",
+    "eslint": "^8.57.1",
+    "typescript": "^5.7.2"
+  }
+}
